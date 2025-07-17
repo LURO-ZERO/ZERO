@@ -76,7 +76,7 @@ bot(
     await message.client.sendMessage(
       message.jid,
       {
-        image: { url: 'https://files.catbox.moe/45n54r.png' },
+        image: { url: 'https://files.catbox.moe/zu92j8.jpg' },
         caption: menu,
         title: "",
         subtitle: "Connect with us",
@@ -93,14 +93,14 @@ bot(
             name: "cta_url",
             buttonParamsJson: JSON.stringify({
               display_text: "𝗧𝗲𝗹𝗲𝗴𝗿𝗮𝗺 𝗦𝘂𝗽𝗽𝗼𝗿𝘁",
-              url: "https://t.me/izumi_xddd"
+              url: "https://t.me/Mudiyanmass"
             }),
           },
           {
             name: "cta_url",
             buttonParamsJson: JSON.stringify({
               display_text: "𝗪𝗵𝗮𝘁𝘀𝗔𝗽𝗽 𝗰𝗵𝗮𝗻𝗻𝗲𝗹",
-              url: "https://whatsapp.com/channel/0029Vaf2tKvGZNCmuSg8ma2O"
+              url: "https://whatsapp.com/channel/0029VbAtIuR8vd1H5FSip426"
             }),
           }
         ],
@@ -224,3 +224,13 @@ bot({
   await message.sendMessage(message.jid, "_rebooting_");
   return require('pm2').restart('index.js');
 });
+
+bot({
+  pattern: 'jid$',
+  fromMe: isPrivate,
+  desc: 'Restart the bot',
+  type: 'user'
+}, async (message, client) => {
+await message.reply(message.jid)
+});
+
