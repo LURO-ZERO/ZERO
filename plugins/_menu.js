@@ -18,7 +18,7 @@ bot(
       forwardingScore: 1,
       isForwarded: true,
       forwardedNewsletterMessageInfo: {
-        newsletterJid: '120363298577467093@newsletter',
+        newsletterJid: '120363401718648491@newsletter',
         newsletterName: BOT_NAME,
         serverMessageId: -1
       },
@@ -127,7 +127,7 @@ bot(
       forwardingScore: 1,
       isForwarded: true,
       forwardedNewsletterMessageInfo: {
-        newsletterJid: '120363298577467093@newsletter',
+        newsletterJid: '120363401718648491@newsletter',
         newsletterName: BOT_NAME,
         serverMessageId: -1
       }
@@ -181,7 +181,7 @@ bot(
       forwardingScore: 1,
       isForwarded: true,
       forwardedNewsletterMessageInfo: {
-        newsletterJid: '120363298577467093@newsletter',
+        newsletterJid: '120363401718648491@newsletter',
         newsletterName: BOT_NAME,
         serverMessageId: -1
       }
