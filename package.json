@@ -9,20 +9,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Akshay-Eypz/whatsapp-bot.git"
+    "url": "git+https://github.com/LURO-ZERO/ZERO.git"
   },
   "keywords": [
     "bot",
-    "Akshay",
+    "Luro",
     "WhatsApp",
-    "Eypz"
+    "Zero"
   ],
-  "author": "Akshay",
+  "author": "Luro",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/Akshay-Eypz/whatsapp-bot/issues"
+    "url": "https://github.com/LURO-ZERO/ZERO/issues"
   },
-  "homepage": "https://github.com/Akshay-Eypz/whatsapp-bot#readme",
+  "homepage": "https://github.com/LURO-ZERO/ZERO#readme",
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
     "axios": "^1.7.7",
