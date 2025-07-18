@@ -2,9 +2,7 @@ const axios = require("axios");
 const yts = require("yt-search");
 const config = require("../config");
 const { bot, isPrivate } = require("../lib/");
-const ytd = require("../lib/scrape").ytd;
-
-const isUrl = (url) => /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\//.test(url);
+const { ytd } = require("../lib/scrape");
 
 // --- VIDEO FUNCTION ---
 async function downloadAndSendVideo(message, videoUrl) {
@@ -12,12 +10,9 @@ async function downloadAndSendVideo(message, videoUrl) {
     const video = await ytd(videoUrl);
     if (!video?.url) return await message.reply("❌ Failed to get video link.");
 
-    const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/)|v=)([a-zA-Z0-9_-]{11})/);
+    const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/|v=))([a-zA-Z0-9_-]{11})/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
-
-    const thumbnailUrl = videoId
-      ? https://img.youtube.com/vi/${videoId}/hqdefault.jpg
-      : null;
+    const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
 
     const jpegThumbnail = thumbnailUrl
       ? await axios.get(thumbnailUrl, { responseType: "arraybuffer" }).then(res => res.data)
@@ -26,14 +21,14 @@ async function downloadAndSendVideo(message, videoUrl) {
     await message.client.sendMessage(message.jid, {
       video: { url: video.url },
       mimetype: "video/mp4",
-      caption: *${video.title}*
+      caption: `🎬 *${video.title}*`
     }, { quoted: message.data });
 
     await message.client.sendMessage(message.jid, {
       document: { url: video.url },
-      fileName: ${video.title}.mp4,
+      fileName: `${video.title}.mp4`,
       mimetype: "video/mp4",
-      caption: *${video.title}*,
+      caption: `🎬 *${video.title}*`,
       jpegThumbnail
     }, { quoted: message.data });
 
@@ -49,12 +44,9 @@ async function downloadAndSendAudio(message, videoUrl) {
     const video = await ytd(videoUrl);
     if (!video?.url) return await message.reply("❌ Failed to get audio link.");
 
-    const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/)|v=)([a-zA-Z0-9_-]{11})/);
+    const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/|v=))([a-zA-Z0-9_-]{11})/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
-
-    const thumbnailUrl = videoId
-      ? https://img.youtube.com/vi/${videoId}/hqdefault.jpg
-      : null;
+    const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
 
     const jpegThumbnail = thumbnailUrl
       ? await axios.get(thumbnailUrl, { responseType: "arraybuffer" }).then(res => res.data)
@@ -81,9 +73,9 @@ async function downloadAndSendAudio(message, videoUrl) {
 
     await message.client.sendMessage(message.jid, {
       document: { url: video.url },
-      fileName: ${video.title}.mp3,
+      fileName: `${video.title}.mp3`,
       mimetype: "audio/mp3",
-      caption: 🎵 *${video.title}*,
+      caption: `🎵 *${video.title}*`,
       jpegThumbnail
     }, { quoted: message.data });
 
@@ -96,7 +88,7 @@ async function downloadAndSendAudio(message, videoUrl) {
 // --- SEARCH HANDLER ---
 async function searchYouTube(query) {
   const results = await yts.search(query);
-  if (!results  !results.videos  !results.videos.length) return null;
+  if (!results || !results.videos || !results.videos.length) return null;
   return results.videos[0].url;
 }
 
@@ -131,6 +123,7 @@ bot(
     await downloadAndSend(message, "audio", query, false);
   }
 );
+
 bot(
   {
     pattern: "video ?(.*)",
@@ -153,7 +146,7 @@ bot(
   },
   async (message, match) => {
     const url = match || message.reply_message?.text;
-    if (!url || !isUrl(url)) {
+    if (!url || !url.includes("youtube.com") && !url.includes("youtu.be")) {
       return await message.reply("❗ Please provide a valid YouTube URL.");
     }
     await downloadAndSend(message, "audio", url, true);
@@ -169,7 +162,7 @@ bot(
   },
   async (message, match) => {
     const url = match || message.reply_message?.text;
-    if (!url || !isUrl(url)) {
+    if (!url || !url.includes("youtube.com") && !url.includes("youtu.be")) {
       return await message.reply("❗ Please provide a valid YouTube URL.");
     }
     await downloadAndSend(message, "video", url, true);
