@@ -1,3 +1,5 @@
+const { bot, isPrivate } = require("../lib/");
+
 bot(
   {
     pattern: "video ?(.*)",
