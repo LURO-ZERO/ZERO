@@ -2,7 +2,7 @@ const axios = require("axios");
 const yts = require("yt-search");
 const config = require("../config");
 const { bot, isPrivate } = require("../lib/");
-const ytd = require("../lib/scrape").ytd;
+const { ytd } = require("../lib/scrape");
 
 // --- VIDEO FUNCTION ---
 async function downloadAndSendVideo(message, videoUrl) {
@@ -12,7 +12,6 @@ async function downloadAndSendVideo(message, videoUrl) {
 
     const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/|v=))([a-zA-Z0-9_-]{11})/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
-
     const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
 
     const jpegThumbnail = thumbnailUrl
@@ -22,14 +21,14 @@ async function downloadAndSendVideo(message, videoUrl) {
     await message.client.sendMessage(message.jid, {
       video: { url: video.url },
       mimetype: "video/mp4",
-      caption: `*${video.title}*`
+      caption: `🎬 *${video.title}*`
     }, { quoted: message.data });
 
     await message.client.sendMessage(message.jid, {
       document: { url: video.url },
       fileName: `${video.title}.mp4`,
       mimetype: "video/mp4",
-      caption: `*${video.title}*`,
+      caption: `🎬 *${video.title}*`,
       jpegThumbnail
     }, { quoted: message.data });
 
@@ -47,7 +46,6 @@ async function downloadAndSendAudio(message, videoUrl) {
 
     const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/|v=))([a-zA-Z0-9_-]{11})/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
-
     const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
 
     const jpegThumbnail = thumbnailUrl
