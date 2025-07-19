@@ -224,13 +224,3 @@ bot({
   await message.sendMessage(message.jid, "_rebooting_");
   return require('pm2').restart('index.js');
 });
-
-bot({
-  pattern: 'jid$',
-  fromMe: isPrivate,
-  desc: 'Restart the bot',
-  type: 'user'
-}, async (message, client) => {
-await message.reply(message.jid)
-});
-
