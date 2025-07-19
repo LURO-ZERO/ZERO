@@ -1,9 +1,8 @@
 const plugins = require("../lib/plugins");
 const { bot, isPrivate, clockString, pm2Uptime } = require("../lib");
-const { OWNER_NAME, BOT_NAME,HANDLERS } = require("../config");
+const { OWNER_NAME, BOT_NAME, HANDLERS } = require("../config");
 const { hostname } = require("os");
-
-bot(
+ bot(
   {
     pattern: "menu",
     fromMe: isPrivate,
@@ -12,36 +11,26 @@ bot(
     type: "user",
   },
   async (message, match) => {
-    const handlerChar = HANDLERS.replace(/\[|\]/g, "").charAt(0); // Get - or ! or .
 
-    const contextInfo = {
-      forwardingScore: 1,
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: '120363401718648491@newsletter',
-        newsletterName: BOT_NAME,
-        serverMessageId: -1
-      },
-    };
 
-    if (match) {
-      for (let i of plugins.commands) {
-        if (
-          i.pattern instanceof RegExp &&
-          i.pattern.test(message.prefix + match)
-        ) {
-          const cmdName = i.pattern.toString().split(/\W+/)[1];
-          return message.reply(`Command: ${message.prefix}${cmdName.trim()}\nDescription: ${i.desc}`);
-        }
-      }
-    }
+const handlerChar = HANDLERS.replace(/\[|\]/g, "").charAt(0); // Get - or ! or .
 
-    let { prefix } = message;
-    let [date, time] = new Date()
-      .toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
-      .split(",");
+const contextInfo = {
+  forwardingScore: 1,
+  isForwarded: true,
+  forwardedNewsletterMessageInfo: {
+    newsletterJid: '120363401718648491@newsletter',
+    newsletterName: BOT_NAME,
+    serverMessageId: -1
+  },
+};
 
-    let menu = `╭━ᆫ ${BOT_NAME} ᄀ━
+let { prefix } = message;
+let [date, time] = new Date()
+  .toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
+  .split(",");
+
+let menu = `╭━ᆫ ${BOT_NAME} ᄀ━
 ┃ ⎆  OWNER   : ${OWNER_NAME}
 ┃ ⎆  PREFIX  : ${prefix}
 ┃ ⎆  DATE    : ${date}
@@ -49,71 +38,70 @@ bot(
 ┃ ⎆  COMMANDS: ${plugins.commands.length}
 ╰━━━━━━━━━━━━\n`;
 
-    let cmnd = [];
-    let cmd;
-    let category = [];
+let cmnd = [];
+let cmd;
+let category = [];
 
-    plugins.commands.forEach((command) => {
-      if (command.pattern instanceof RegExp) {
-        cmd = command.pattern.toString().split(/\W+/)[1];
-      }
+plugins.commands.forEach((command) => {
+  if (command.pattern instanceof RegExp) {
+    cmd = command.pattern.toString().split(/\W+/)[1];
+  }
 
-      if (!command.dontAddCommandList && cmd !== undefined) {
-        let type = command.type ? command.type.toLowerCase() : "misc";
-        cmnd.push({ cmd, type });
-        if (!category.includes(type)) category.push(type);
-      }
-    });
+  if (!command.dontAddCommandList && cmd !== undefined) {
+    let type = command.type ? command.type.toLowerCase() : "misc";
+    cmnd.push({ cmd, type });
+    if (!category.includes(type)) category.push(type);
+  }
+});
 
-    cmnd.sort();
-    category.sort().forEach((cmmd) => {
-      let comad = cmnd.filter(({ type }) => type === cmmd);
-      comad.forEach(({ cmd }) => {
-        menu += `\n> ${cmd.trim()}`;
-      });
-    });
+cmnd.sort();
+category.sort().forEach((cmmd) => {
+  let comad = cmnd.filter(({ type }) => type === cmmd);
+  comad.forEach(({ cmd }) => {
+    menu += `\n> ${cmd.trim()}`;
+  });
+});
 
-    await message.client.sendMessage(
-      message.jid,
+await message.client.sendMessage(
+  message.jid,
+  {
+    image: { url: 'https://files.catbox.moe/zu92j8.jpg' },
+    caption: menu,
+    title: "",
+    subtitle: "Connect with us",
+    footer: "Open Base",
+    interactiveButtons: [
       {
-        image: { url: 'https://files.catbox.moe/zu92j8.jpg' },
-        caption: menu,
-        title: "",
-        subtitle: "Connect with us",
-        footer: "Open Base",
-        interactiveButtons: [
-          {
-            name: "quick_reply",
-            buttonParamsJson: JSON.stringify({
-              display_text: "𝗢𝘄𝗻𝗲𝗿",
-              id: `${handlerChar}owner`
-            }),
-          },
-          {
-            name: "cta_url",
-            buttonParamsJson: JSON.stringify({
-              display_text: "𝗧𝗲𝗹𝗲𝗴𝗿𝗮𝗺 𝗦𝘂𝗽𝗽𝗼𝗿𝘁",
-              url: "https://t.me/Mudiyanmass"
-            }),
-          },
-          {
-            name: "cta_url",
-            buttonParamsJson: JSON.stringify({
-              display_text: "𝗪𝗵𝗮𝘁𝘀𝗔𝗽𝗽 𝗰𝗵𝗮𝗻𝗻𝗲𝗹",
-              url: "https://whatsapp.com/channel/0029VbAtIuR8vd1H5FSip426"
-            }),
-          }
-        ],
-        contextInfo,
-        viewOnce: true,
-        linkPreview: true // ✅ link preview enabled
+        name: "quick_reply",
+        buttonParamsJson: JSON.stringify({
+          display_text: "𝗢𝘄𝗻𝗲𝗿",
+          id: `${handlerChar}owner`
+        }),
       },
       {
-        quoted: message.data
+        name: "cta_url",
+        buttonParamsJson: JSON.stringify({
+          display_text: "𝗧𝗲𝗹𝗲𝗴𝗿𝗮𝗺 𝗦𝘂𝗽𝗽𝗼𝗿𝘁",
+          url: "https://t.me/Mudiyanmass"
+        }),
+      },
+      {
+        name: "cta_url",
+        buttonParamsJson: JSON.stringify({
+          display_text: "𝗪𝗵𝗮𝘁𝘀𝗔𝗽𝗽 𝗰𝗵𝗮𝗻𝗻𝗲𝗹",
+          url: "https://whatsapp.com/channel/0029VbAtIuR8vd1H5FSip426"
+        }),
       }
-    );
+    ],
+    contextInfo,
+    viewOnce: true,
+    linkPreview: true
+  },
+  {
+    quoted: message.data
   }
-);
+)
+})
 bot(
   {
     pattern: "list",
