@@ -13,7 +13,7 @@ module.exports = {
   BRANCH: "main",
   PACKNAME: process.env.PACKNAME || "WhatsApp Bot",
   AUTHOR: process.env.AUTHOR || "Nithin",
-  SUDO: process.env.SUDO || "917902624272",
+  SUDO: process.env.SUDO || "918137829228",
   OWNER_NAME: process.env.OWNER_NAME || "Nithin",
   BOT_NAME: process.env.BOT_NAME || "WhatsApp Bot",
   AUTO_READ: toBool(process.env.AUTO_READ) || false,
