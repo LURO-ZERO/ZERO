@@ -28,6 +28,7 @@
     "axios": "^1.7.7",
     "@adiwajshing/baileys": "npm:baileys-pro",
     "baileys": "npm:baileys-pro",
+    "express": "^4.18.2",
     "browser-id3-writer": "^4.4.0",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.4.5",
