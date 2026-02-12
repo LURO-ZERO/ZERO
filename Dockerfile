@@ -1,12 +1,14 @@
-FROM node:20-alpine
+FROM node:lts-bullseye
 
-RUN apk add --no-cache git ffmpeg bash
+RUN apt-get update && \
+    npm i -g pm2 && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/LURO-ZERO/ZERO /root/bot/
+WORKDIR /app
 
-WORKDIR /root/bot/
+COPY package.json .
+RUN yarn install
+COPY . .
 
-RUN npm install --legacy-peer-deps
-RUN npm install sqlite3
-
-CMD ["npm", "start"]
+EXPOSE 8080
+CMD ["yarn", "start"]
