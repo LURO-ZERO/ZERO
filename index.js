@@ -25,7 +25,7 @@ const {
 } = require("./lib/database/StoreDb");
 
 const app = express();
-const port = PORT: process.env.PORT || 8000;
+const port = process.env.PORT || 8000;
 
 const sessionFolderPath = "./session";
 
