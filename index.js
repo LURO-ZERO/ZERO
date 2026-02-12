@@ -5,7 +5,7 @@ const fs = require("fs");
 const config = require("./config");
 const axios = require("axios");
 const util = require("util");
-const plugins = require("./plugins");
+const plugins = require("./lib/plugins");
 const {
   default: makeWASocket,
   useMultiFileAuthState,
