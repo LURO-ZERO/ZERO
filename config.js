@@ -9,7 +9,7 @@ module.exports = {
   LANG: process.env.LANG || "EN",
   HANDLERS: process.env.HANDLER === "false" || process.env.HANDLER === "null"
       ? "^"
-      : "[-]",
+      : "[.]",
   BRANCH: "main",
   PACKNAME: process.env.PACKNAME || "WhatsApp Bot",
   AUTHOR: process.env.AUTHOR || "Nithin",
