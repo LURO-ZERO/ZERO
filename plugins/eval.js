@@ -37,7 +37,7 @@ const config = require('../config');
 
 bot({
     pattern: 'eval', on: "text", fromMe: true, dontAddCommandList: true
-}, async (message, match) => {
+}, async (message, match, m, client) => {
     if (!match.startsWith(">")) return;
         try {
             let evaled = await eval(`(async()=> { ${match.replace(">", "")} }) ()`);
