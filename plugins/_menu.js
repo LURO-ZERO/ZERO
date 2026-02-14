@@ -71,13 +71,13 @@ await message.client.sendMessage(
     subtitle: "Connect with us",
     footer: "Open Base",
     interactiveButtons: [
-      {
+      /*{
         name: "quick_reply",
         buttonParamsJson: JSON.stringify({
           display_text: "𝗢𝘄𝗻𝗲𝗿",
           id: `${handlerChar}owner`
         }),
-      },
+      },*/
       {
         name: "cta_url",
         buttonParamsJson: JSON.stringify({
