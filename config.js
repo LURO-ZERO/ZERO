@@ -12,7 +12,7 @@ module.exports = {
   BRANCH: "main",
   PACKNAME: process.env.PACKNAME || "ZERO",
   AUTHOR: process.env.AUTHOR || "Nithin",
-  SUDO: process.env.SUDO || "919074692450",
+  SUDO: process.env.SUDO || "919074692450,918157993101",
   OWNER_NUMBER: process.env.OWNER_NUMBER || "918137829228",
   OWNER_NAME: process.env.OWNER_NAME || "Nithin",
   BOT_NAME: process.env.BOT_NAME || "ZERO", 
