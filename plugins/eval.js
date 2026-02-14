@@ -39,7 +39,6 @@ bot({
     pattern: 'eval', on: "text", fromMe: true, dontAddCommandList: true
 }, async (message, match) => {
     if (!match.startsWith(">")) return;
-        //const m = message;
         try {
             let evaled = await eval(`(async()=> { ${match.replace(">", "")} }) ()`);
             if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
