@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 bot({
   pattern: "insta ?(.*)",
-  isPrivate,
+  fromMe: isPrivate,
   desc: "Download Instagram videos/images.",
   type: "downloader",
 }, async (message, match) => {
