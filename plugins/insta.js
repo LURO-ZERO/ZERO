@@ -9,17 +9,13 @@ bot({
 }, async (message, match) => {
   if (!match) return;
 
-  const api = `https://api.eypz.ct.ws/api/dl/instagram?url=${encodeURIComponent(match)}`;
+  const apiUrl = `https://api-aswin-sparky.koyeb.app/api/downloader/igdl?url=${encodeURIComponent(match)}`;
 
   try {
-    const response = await fetch(api);
-    const data = await response.json();
+    const response = await fetch(apiUrl);
+    const result = await response.json();
 
-    if (data.status !== "success") return;
-
-    const { videos = [], images = [] } = data;
-
-    if (videos.length === 0 && images.length === 0) return;
+    if (!result.status || !result.data || result.data.length === 0) return;
 
     const quotedObj = {
       quoted: {
@@ -28,29 +24,29 @@ bot({
       },
     };
 
-    for (const vid of videos) {
-      await message.client.sendMessage(
-        message.jid,
-        {
-          video: { url: vid },
-          caption: "Here is your Instagram video",
-          mimetype: "video/mp4",
-        },
-        quotedObj
-      );
-    }
-
-    for (const img of images) {
-      await message.client.sendMessage(
-        message.jid,
-        {
-          image: { url: img },
-          caption: "Here is your Instagram image",
-        },
-        quotedObj
-      );
+    for (const item of result.data) {
+      if (item.type === "video") {
+        await message.client.sendMessage(
+          message.jid,
+          {
+            video: { url: item.url },
+            caption: "Here is your Instagram video",
+            mimetype: "video/mp4",
+          },
+          quotedObj
+        );
+      } else if (item.type === "image") {
+        await message.client.sendMessage(
+          message.jid,
+          {
+            image: { url: item.url },
+            caption: "Here is your Instagram image",
+          },
+          quotedObj
+        );
+      }
     }
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching Instagram media:", error);
   }
 });
