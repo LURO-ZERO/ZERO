@@ -36,7 +36,6 @@ const {
 const util = require('util');
 const config = require('../config');
 
-const isPrivate = config.WORK_TYPE.toLowerCase() === "private";
 const Function = bot;
 // > eval (sync)
 bot({ on: 'text', fromMe: isPrivate, dontAddCommandList: true }, async (message) => {
