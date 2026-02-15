@@ -38,7 +38,7 @@ const config = require('../config');
 
 const Function = bot;
 // > eval (sync)
-bot({ on: 'text', fromMe: isPrivate, dontAddCommandList: true }, async (message) => {
+bot({ on: 'text', fromMe: isPrivate, dontAddCommandList: true }, async (message, match, m, client) => {
     try {
         console.log("[DEBUG] Message text:", message.text); // Log the actual text
 
@@ -74,7 +74,7 @@ bot({ on: 'text', fromMe: isPrivate, dontAddCommandList: true }, async (message)
     }
 });
 
-bot({ on: 'text', fromMe: isPrivate, dontAddCommandList: true }, async (message) => {
+bot({ on: 'text', fromMe: isPrivate, dontAddCommandList: true }, async (message, match, m, client) => {
     try {
         if (!message.text || typeof message.text !== "string") return;
 
